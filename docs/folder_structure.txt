@@ -1,0 +1,37 @@
+backend/
+│
+├── src/
+│   ├── config/
+│   │     db.js
+│   │
+│   ├── exceptions/
+│   │     app.error.js
+│   │
+│   ├── helpers/
+│   │     asyncHandler.js
+│   │     dbErrorHandler.js
+│   │
+│   ├── middleware/
+│   │     auth.middleware.js
+│   │     error.middleware.js
+│   │
+│   ├── features/
+│   │      │──users/
+│   │         users.controller.js
+│   │         users.routes.js
+│   │         users.model.js
+│   │         users.service.js
+│   │   
+│   │
+│   ├── utils/
+│   │     helpers.js
+│   │     optStore.js
+│   │     hash.js
+│   │     jwt.js
+│   │
+│   └── app.js
+│
+├── .env
+├── .gitignore
+├── package.json
+└── index.js

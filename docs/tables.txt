@@ -1,0 +1,56 @@
+
+-- 1. Extensions
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+ 
+-- 2. Enums
+CREATE TYPE user_role AS ENUM ('coach', 'client');
+CREATE TYPE assignment_status AS ENUM ('pending', 'completed');
+ 
+-- 3. Tables
+ 
+CREATE TABLE users (
+  id            UUID          PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name          VARCHAR(100)  NOT NULL,
+  email         VARCHAR(150)  NOT NULL UNIQUE,
+  password_hash VARCHAR(255)  NOT NULL,
+  role          user_role     NOT NULL DEFAULT 'client',
+  created_at    TIMESTAMPTZ   NOT NULL DEFAULT NOW()
+);
+ 
+CREATE TABLE workout_plans (
+  id          UUID         PRIMARY KEY DEFAULT uuid_generate_v4(),
+  coach_id    UUID         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name        VARCHAR(150) NOT NULL,
+  description TEXT,
+  created_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+);
+ 
+CREATE TABLE exercises (
+  id    UUID         PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name     VARCHAR(150) NOT NULL,  
+  created_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE plan_exercises (
+  id            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  plan_id       UUID NOT NULL REFERENCES workout_plans(id) ON DELETE CASCADE,
+  exercise_id   UUID NOT NULL REFERENCES exercises(id) ON DELETE CASCADE,
+  order_index   INT
+);
+ 
+CREATE TABLE plan_assignments (
+  id           UUID              PRIMARY KEY DEFAULT uuid_generate_v4(),
+  plan_id      UUID              NOT NULL REFERENCES workout_plans(id) ON DELETE CASCADE,
+  client_id    UUID              NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  status       assignment_status NOT NULL DEFAULT 'pending',
+  assigned_at  TIMESTAMPTZ       NOT NULL DEFAULT NOW(),
+  completed_at TIMESTAMPTZ
+);
+ 
+-- 4. Indexes
+CREATE INDEX idx_workout_plans_coach    ON workout_plans (coach_id);
+CREATE INDEX idx_assignments_client     ON plan_assignments (client_id);
+CREATE INDEX idx_assignments_plan       ON plan_assignments (plan_id);
+CREATE INDEX idx_assignments_status     ON plan_assignments (status);
+CREATE INDEX idx_plan_exercises_plan ON plan_exercises (plan_id);
+CREATE INDEX idx_plan_exercises_exercise ON plan_exercises (exercise_id); 
