@@ -17,6 +17,7 @@ This API powers workout plans, exercises, user management, and plan assignments 
 
 This project follows **Clean Architecture + Feature-based modular structure**
 
+```bash
 backend/
 │
 ├── src/
