@@ -17,7 +17,7 @@ This API powers workout plans, exercises, user management, and plan assignments 
 
 This project follows **Clean Architecture + Feature-based modular structure**
 
-
+```
 backend/
 │
 ├── src/
@@ -53,7 +53,7 @@ backend/
 ├── .gitignore
 ├── package.json
 └── index.js
-
+```
 
 ---
 
