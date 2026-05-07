@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: 'https://fitness-planner-backend-vtk7.onrender.com/api',
+        url: 'https://fitness-planner-backend-vtk7.onrender.com/api', // new url
       },
     ],
     components: {
