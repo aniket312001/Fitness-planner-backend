@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000/api',
+        url: 'https://fitness-planner-backend-vtk7.onrender.com/api',
       },
     ],
     components: {
